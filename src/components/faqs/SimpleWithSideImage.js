@@ -26,7 +26,7 @@ const Heading = tw(SectionHeading)`lg:text-left`;
 const Description = tw.p`max-w-xl text-center mx-auto lg:mx-0 lg:text-left lg:max-w-none leading-relaxed text-sm sm:text-base lg:text-lg font-medium mt-4 text-secondary-100`;
 
 const FAQSContainer = tw.dl`mt-12`;
-const FAQ = tw.div`cursor-pointer mt-8 select-none border lg:border-0 px-8 py-4 lg:p-0 rounded-lg lg:rounded-none`;
+const Category = tw.div`cursor-pointer mt-8 select-none border lg:border-0 px-8 py-4 lg:p-0 rounded-lg lg:rounded-none`;
 const Question = tw.dt`flex justify-between items-center`;
 const QuestionText = tw.span`text-lg lg:text-xl font-semibold`;
 const QuestionToggleIcon = styled.span`
@@ -52,22 +52,23 @@ export default ({
    */
   const defaultFaqs = [
     {
-      question: "Is lunch provided free of cost ?",
+      question: "Category1",
+      items: ['item1','item2', 'item3', 'item4', 'item5'],
       answer:
         "Yes, it is, if you have a membership with us. Otherwise it is charged as per the menu. Some limits do apply as to how much items can be included in your lunch. This limit is enough for any one person and merely exists to discourage abusal of the system."
     },
     {
-      question: "Do you have 2 Bedroom suites ?",
+      question: "Category2",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     },
     {
-      question: "Are Wi-Fi costs included in the price ?",
+      question: "Category 3",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     },
     {
-      question: "Where can I reach you for support ?",
+      question: "Category 4",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     }
@@ -84,49 +85,7 @@ export default ({
 
   return (
     <Container>
-      <Content>
-        <TwoColumn>
-          <Column tw="hidden lg:block w-5/12 flex-shrink-0">
-            <Image imageContain={imageContain} imageShadow={imageShadow} imageSrc={imageSrc} />
-          </Column>
-          <Column>
-            <FAQContent>
-              {subheading ? <Subheading>{subheading}</Subheading> : null}
-              <Heading>{heading}</Heading>
-              <Description>{description}</Description>
-              <FAQSContainer>
-                {faqs.map((faq, index) => (
-                  <FAQ
-                    key={index}
-                    onClick={() => {
-                      toggleQuestion(index);
-                    }}
-                    className="group"
-                  >
-                    <Question>
-                      <QuestionText>{faq.question}</QuestionText>
-                      <QuestionToggleIcon>
-                        {activeQuestionIndex === index ? <MinusIcon /> : <PlusIcon />}
-                      </QuestionToggleIcon>
-                    </Question>
-                    <Answer
-                      variants={{
-                        open: { opacity: 1, height: "auto", marginTop: "16px" },
-                        collapsed: { opacity: 0, height: 0, marginTop: "0px" }
-                      }}
-                      initial="collapsed"
-                      animate={activeQuestionIndex === index ? "open" : "collapsed"}
-                      transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                    >
-                      {faq.answer}
-                    </Answer>
-                  </FAQ>
-                ))}
-              </FAQSContainer>
-            </FAQContent>
-          </Column>
-        </TwoColumn>
-      </Content>
+      
     </Container>
   );
 };
