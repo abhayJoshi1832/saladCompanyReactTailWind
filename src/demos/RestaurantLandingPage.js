@@ -2,13 +2,14 @@ import React from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
-import Hero from "components/hero/TwoColumnWithVideo.js";
-import Features from "components/features/features.js";
-import MainFeature from "components/features/mainFeature.js";
-import MainFeature2 from "components/features/mainFeature2";
-import TabGrid from "components/cards/TabCardGrid.js";
-import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
+import Hero from "components/hero/saladCompanyHero.js";
+import Features from "components/features/mainFeatureOurCommitment.js";
+import MainFeature from "components/features/mainFeatureButWhy.js";
+import MainFeature2 from "components/features/mainFeatureStartThisWeek";
+import TabGrid from "components/saladCompany/makeSaladActual.js";
+import Testimonial from "components/testimonials/testimonials.js";
 import DownloadApp from "components/cta/DownloadApp.js";
+import Header from "components/headers/light";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 
 import chefIconImageSrc from "images/chef-icon.svg";
@@ -23,6 +24,7 @@ export default () => {
   const imageCss = tw`rounded-2xl w-auto`;
   return (
     <AnimationRevealPage>
+      <Header/>
        <Hero
         heading={<>Salad Company <HighlightedText>By Freshia</HighlightedText></>}
         description="Make your own salad. We'll deliver it fresh to you, everyday."

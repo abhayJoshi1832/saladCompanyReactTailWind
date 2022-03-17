@@ -10,6 +10,9 @@ import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
 import HeaderOG from "../headers/light";
+import AnimationRevealPage from "helpers/AnimationRevealPage";
+import { ReactComponent as PlusIcon } from "feather-icons/dist/icons/plus-circle.svg";
+import { PrimaryButton } from "components/misc/Buttons.js";
 
 const openInNewTab = (url) => {
   const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
@@ -30,12 +33,13 @@ const TabControl = styled.div`
 `;
 
 const TabContent = tw(motion.div)`mt-6 flex flex-wrap sm:-mr-10 md:-mr-6 lg:-mr-12`;
+const ButtonContainer = tw.div`mt-6 flex flex-row justify-around sm:-mr-10 md:-mr-6 lg:-mr-12`;
 const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12 `;
 const Card = tw.div`bg-green-200 rounded-b max-w-xs mx-auto sm:max-w-none sm:mx-0 flex items-center`;
 
 
 const CardText = tw.div`p-4 text-gray-900`;
-const CardTitle = tw.h5`text-lg font-semibold group-hover:text-green-500`;
+const CardTitle = tw.h5`text-lg font-semibold group-hover:(text-green-500 cursor-pointer)`;
 const CardContent = tw.p`mt-1 text-sm font-medium text-gray-600`;
 
 const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
@@ -46,13 +50,23 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 `;
 
 export default ({
-  heading ="Make your salad",
-  tabs = {
-    Base: [
+  heading ="Choose your salad",
+  recipes = [
+      
+    {
+        imageSrc:
+          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
+        title: "Veg veg crips",
+        content: "Tomato Salad & Carrot",
+        price: "$5.99",
+        rating: "5.0",
+        reviews: "87",
+        url: "#"
+      },
       {
         imageSrc:
           "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Veg Mixer",
+        title: "Veg veg crips",
         content: "Tomato Salad & Carrot",
         price: "$5.99",
         rating: "5.0",
@@ -129,87 +143,127 @@ export default ({
         reviews: "26",
         url: "#"
       }
-    ],
-    Greens: getRandomCards(),
-    Protein: getRandomCards(),
-    Dressing: getRandomCards(),
-    Seeds: getRandomCards(),
-    Addons: getRandomCards()
-  }
-}) => {
+    ]
+  }) => {
+
+    let recipesOut = recipes.map((card, index) => (
+      <CardContainer key={index}>
+        <Card  className="group flex items-center" >
+                            
+          <CardText>
+          <CardTitle onClick={() => openInNewTab("https://www.google.com/search?q="+card.title)}>{card.title}</CardTitle>
+                             
+            <CardContent>{card.content}</CardContent>
+          </CardText>
+          <Container className="w-full ">
+            <select defaultValue={0} >
+                <option value="0">0 gm</option>
+                <option value="10">10 gm</option>
+                <option value="20">20 gm</option>
+                <option value="40">40 gm</option>
+              </select>
+              <p>Add by wt.</p>
+              </Container> 
+        </Card>
+      </CardContainer>
+    ));
+
+    return (
+      <AnimationRevealPage>
+      <HeaderOG/>
+      {/* <Container> */}
+        <ContentWithPaddingXl>
+          <HeaderRow>
+            <Header>{heading}</Header>
+          </HeaderRow>          
+            <TabContent>
+              {recipesOut}
+            </TabContent>
+            {/* <ButtonContainer>
+            <CardContainer><PrimaryButton className="m-2" as="a" href="/makesalad">+ Make your salad</PrimaryButton></CardContainer>
+            <CardContainer className="flex justify-end"><PrimaryButton className="m-2" as="a" href="/makesalad"> Next</PrimaryButton></CardContainer>
+            </ButtonContainer> */}
+            <br />
+            <ButtonContainer>
+            <PrimaryButton className="m-2" as="a" href="/makesalad">+ Make your salad</PrimaryButton>
+            <PrimaryButton className="m-2 mr-5" as="a" href="/"> Next </PrimaryButton>
+            </ButtonContainer>
+
+              
+           
+            
+            </ContentWithPaddingXl>
+        <DecoratorBlob1 />
+        <DecoratorBlob2 />
+      {/* </Container> */}
+      </AnimationRevealPage>
+    );
+  };
+
+
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
    * as the key and value of the key will be its content (as an array of objects).
    * To see what attributes are configurable of each object inside this array see the example above for "Starters".
    */
-  const tabsKeys = Object.keys(tabs);
-  const [activeTab, setActiveTab] = useState(tabsKeys[0]);
+  // const tabsKeys = Object.keys(tabs);
+  // const [activeTab, setActiveTab] = useState(tabsKeys[0]);
 
-  return (
-    <>
-    <HeaderOG/>
-    <Container>
-      <ContentWithPaddingXl>
-        <HeaderRow>
-          <Header>{heading}</Header>
-          <TabsControl>
-            {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
-                {tabName}
-              </TabControl>
-            ))}
-          </TabsControl>
-        </HeaderRow>
-
-        {tabsKeys.map((tabKey, index) => (
-          <TabContent
-            key={index}
-            variants={{
-              current: {
-                opacity: 1,
-                scale:1,
-                display: "flex",
-              },
-              hidden: {
-                opacity: 0,
-                scale:0.8,
-                display: "none",
-              }
-            }}
-            transition={{ duration: 0.4 }}
-            initial={activeTab === tabKey ? "current" : "hidden"}
-            animate={activeTab === tabKey ? "current" : "hidden"}
-          >
-            {tabs[tabKey].map((card, index) => (
-              <CardContainer key={index}>
-                <Card  className="group flex items-center" >
+//   return (
+//     <AnimationRevealPage>
+//     <HeaderOG/>
+//     {/* <Container> */}
+//       <ContentWithPaddingXl>
+//         <HeaderRow>
+//           <Header>{heading}</Header>
+//         </HeaderRow>          
+//           <TabContent
+//             // key={index}
+//             // variants={{
+//             //   current: {
+//             //     opacity: 1,
+//             //     scale:1,
+//             //     display: "flex",
+//             //   },
+//             //   hidden: {
+//             //     opacity: 0,
+//             //     scale:0.8,
+//             //     display: "none",
+//             //   }
+//             // }}
+//            // transition={{ duration: 0.4 }}
+//             // initial={activeTab === tabKey ? "current" : "hidden"}
+//             // animate={activeTab === tabKey ? "current" : "hidden"}
+//           >
+//             {const recipesOut = recipes.map((card, index) => (
+//               <CardContainer key={index}>
+//                 <Card  className="group flex items-center" >
                                     
-                  <CardText>
-                  <CardTitle onClick={() => openInNewTab("https://www.google.com/search?q="+card.title)}>{card.title}</CardTitle>
+//                   <CardText>
+//                   <CardTitle onClick={() => openInNewTab("https://www.google.com/search?q="+card.title)}>{card.title}</CardTitle>
                                      
-                    <CardContent>{card.content}</CardContent>
-                  </CardText>
-                  <Container className="w-full ">
-                    <select defaultValue={0} >
-                        <option value="0">0 gm</option>
-                        <option value="10">10 gm</option>
-                        <option value="20">20 gm</option>
-                        <option value="40">40 gm</option>
-                      </select>
-                      <p>Add by wt.</p>
-                      </Container> 
-                </Card>
-              </CardContainer>
-            ))}
-          </TabContent>
-        ))}
-      </ContentWithPaddingXl>
-      <DecoratorBlob1 />
-      <DecoratorBlob2 />
-    </Container>
-    </>
-  );
-};
+//                     <CardContent>{card.content}</CardContent>
+//                   </CardText>
+//                   <Container className="w-full ">
+//                     <select defaultValue={0} >
+//                         <option value="0">0 gm</option>
+//                         <option value="10">10 gm</option>
+//                         <option value="20">20 gm</option>
+//                         <option value="40">40 gm</option>
+//                       </select>
+//                       <p>Add by wt.</p>
+//                       </Container> 
+//                 </Card>
+//               </CardContainer>
+//             ))}
+//           </TabContent>
+//       </ContentWithPaddingXl>
+//       <DecoratorBlob1 />
+//       <DecoratorBlob2 />
+//     {/* </Container> */}
+//     </AnimationRevealPage>
+//   );
+// };
 
 /* This function is only there for demo purposes. It populates placeholder cards */
 const getRandomCards = () => {

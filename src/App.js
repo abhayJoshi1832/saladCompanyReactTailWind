@@ -106,7 +106,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 //import ThankYouPage from "ThankYouPage.js";
 import RestaurantLandingPage from "./demos/RestaurantLandingPage";
 import Login from "pages/Login";
-import MakeSalad from "./components/cards/TabCardGrid"
+import MakeSalad from "./components/saladCompany/makeSaladActual";
+import SelectSalad from "components/saladCompany/selectSalad";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -125,7 +126,10 @@ export default function App() {
         </Route>
         <Route exact path="/makesalad">
           <MakeSalad/>
-        </Route>      
+        </Route>
+        <Route exact path="/selectsalad">
+          <SelectSalad/>
+        </Route>        
       <Route exact path="/">
         <RestaurantLandingPage/>
       </Route>
